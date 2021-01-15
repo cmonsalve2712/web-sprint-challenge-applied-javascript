@@ -24,7 +24,7 @@ const Tabs = (topics) => {
 	});
 
 	return mainDiv;
-};
+}
 
 
 
