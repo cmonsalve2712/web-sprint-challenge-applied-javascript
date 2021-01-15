@@ -1,4 +1,6 @@
-const Card = (article) => {
+import axios from "axios";
+
+const Card = () => {
   // TASK 5
   // ---------------------
   // Implement this function, which should return the markup you see below.
@@ -17,7 +19,27 @@ const Card = (article) => {
   //   </div>
   // </div>
   //
-}
+  let cardUno = document.createElement("div");
+	let headlineDiv = document.createElement("div");
+	let authorDiv = document.createElement("div");
+	let imgContainer = document.createElement("div");
+	let imageElement = document.createElement("img");
+	let randSpan = document.createElement("span");
+
+	cardUno.appendChild(headlineDiv);
+	cardUno.appendChild(authorDiv);
+	authorDiv.appendChild(imgContainer);
+	imgContainer.appendChild(imageElement);
+	authorDiv.appendChild(randSpan);
+
+	cardUno.classList.add("card");
+	headlineDiv.classList.add("headline");
+	authorDiv.classList.add("author");
+	imgContainer.classList.add("img-container");
+
+	return cardUno;
+};
+
 
 const cardAppender = (selector) => {
   // TASK 6
@@ -28,6 +50,15 @@ const cardAppender = (selector) => {
   // Create a card from each and every article object in the response, using the Card component.
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
+  axios
+		.get("https://lambda-times-api.herokuapp.com/topics")
+		.then((response) => {
+			// console.log(response.data.topics);
+			document.querySelector(selector).appendChild(Card(response.data.topics));
+		})
+		.catch((error) => {
+			console.log("something went wrong", error);
+		});
 }
 
 export { Card, cardAppender }
